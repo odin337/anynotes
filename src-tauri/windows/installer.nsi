@@ -385,7 +385,7 @@ Function PageLeaveReinstall
       ; directory. Upgrades keep user data and bypass a second confirmation.
       StrCpy $R1 '"$4\uninstall.exe"'
       ${If} $R0 <> 0
-        StrCpy $R1 "$R1 /UPDATE /P"
+        StrCpy $R1 "$R1 /S /UPDATE"
       ${ElseIf} $PassiveMode = 1
         StrCpy $R1 "$R1 /P"
       ${EndIf}
