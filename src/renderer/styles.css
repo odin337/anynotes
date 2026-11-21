@@ -448,6 +448,21 @@ dialog p { color: var(--muted); overflow-wrap: anywhere; }
   .history-list li { gap: 2px 4px; }
 }
 
+@media (max-width: 250px) {
+  :root { --gutter: 5px; }
+  .toolbar { gap: 3px; }
+  .toolbar-actions { gap: 2px; }
+  .tab { padding-inline: 3px; font-size: 11px; }
+  .add-button { width: 24px; min-height: 24px; }
+  .pin-button { width: 24px; height: 24px; }
+  .paper { padding-inline: 8px; }
+  .counter-layout { grid-template-columns: minmax(84px, 1fr) minmax(96px, 1fr); gap: 6px; }
+  .history-card { padding-left: 6px; }
+  .step-button { width: 37px; }
+  .template-card { grid-template-columns: 19px minmax(0, 1fr) auto; }
+  .drag-handle { width: 19px; }
+}
+
 @media (max-height: 260px) {
   .counter-card { gap: 4px; }
   .counter-value { font-size: 35px; }
@@ -455,4 +470,15 @@ dialog p { color: var(--muted); overflow-wrap: anywhere; }
   .reset-button { min-height: 24px; }
   .paper { padding-top: 7px; }
   .paper-title { font-size: 16px; }
+}
+
+@media (max-height: 175px) {
+  .app { grid-template-rows: 30px minmax(0, 1fr); gap: 4px; }
+  .app:has(.keys-access:not([hidden])) { grid-template-rows: 30px minmax(0, 1fr) auto; }
+  .notes-layout.has-multiple { gap: 4px; }
+  .note-picker select { height: 24px; }
+  .note-picker .ph { top: 5px; }
+  .paper-tools { min-height: 26px; }
+  .paper-tools .icon-button { height: 24px; }
+  .counter-value { font-size: 30px; }
 }

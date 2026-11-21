@@ -1,6 +1,6 @@
 {
   "name": "anynotes",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Заметки поверх окон, счётчик и текстовые шаблоны",
   "private": true,
   "scripts": {

@@ -63,8 +63,8 @@ mod platform {
             return None;
         }
         match key {
-            KeyCode::UP_ARROW => Some(1),
-            KeyCode::DOWN_ARROW => Some(-1),
+            KeyCode::UP_ARROW | KeyCode::RIGHT_ARROW => Some(1),
+            KeyCode::DOWN_ARROW | KeyCode::LEFT_ARROW => Some(-1),
             _ => None,
         }
     }
@@ -125,9 +125,11 @@ mod platform {
         let navigation = CGEventFlags::CGEventFlagNumericPad | CGEventFlags::CGEventFlagSecondaryFn;
         assert_eq!(arrow_step(KeyCode::UP_ARROW, navigation), Some(1));
         assert_eq!(arrow_step(KeyCode::DOWN_ARROW, navigation), Some(-1));
+        assert_eq!(arrow_step(KeyCode::RIGHT_ARROW, navigation), Some(1));
+        assert_eq!(arrow_step(KeyCode::LEFT_ARROW, navigation), Some(-1));
         assert_eq!(
             arrow_step(
-                KeyCode::UP_ARROW,
+                KeyCode::RIGHT_ARROW,
                 navigation | CGEventFlags::CGEventFlagControl
             ),
             None
@@ -142,7 +144,8 @@ mod platform {
         System::LibraryLoader::GetModuleHandleW,
         UI::{
             Input::KeyboardAndMouse::{
-                GetAsyncKeyState, VK_CONTROL, VK_DOWN, VK_LWIN, VK_MENU, VK_RWIN, VK_SHIFT, VK_UP,
+                GetAsyncKeyState, VK_CONTROL, VK_DOWN, VK_LEFT, VK_LWIN, VK_MENU, VK_RIGHT,
+                VK_RWIN, VK_SHIFT, VK_UP,
             },
             WindowsAndMessaging::{
                 CallNextHookEx, SetWindowsHookExW, UnhookWindowsHookEx, HHOOK, KBDLLHOOKSTRUCT,
@@ -159,8 +162,8 @@ mod platform {
         if code == 0 && kind == WM_KEYDOWN as usize {
             let key = unsafe { (*(data as *const KBDLLHOOKSTRUCT)).vkCode };
             let step = match key as u16 {
-                VK_UP => Some(1),
-                VK_DOWN => Some(-1),
+                VK_UP | VK_RIGHT => Some(1),
+                VK_DOWN | VK_LEFT => Some(-1),
                 _ => None,
             };
             if let Some(step) = step {

@@ -1,5 +1,6 @@
 import { execFileSync } from 'node:child_process';
-import { copyFile, mkdir, readFile, readdir } from 'node:fs/promises';
+import { copyFile, mkdir, mkdtemp, readFile, readdir, rm, symlink } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
 import { delimiter, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -22,9 +23,18 @@ if (target === 'mac' && process.platform === 'darwin') {
   const triple = { arm64: 'aarch64-apple-darwin', x64: 'x86_64-apple-darwin' }[arch];
   if (!triple) throw new Error('Expected macOS arm64 or x64.');
   const bundle = build(triple, 'app');
-  const archive = join(out, `AnyNotes-${version}-macOS-${arch}.zip`);
-  execFileSync('ditto', ['-c', '-k', '--keepParent', join(bundle, 'AnyNotes.app'), archive], { stdio: 'inherit' });
-  console.log(archive);
+  const staging = await mkdtemp(join(tmpdir(), 'anynotes-dmg-'));
+  const image = join(out, `AnyNotes-${version}-macOS-${arch}.dmg`);
+  try {
+    execFileSync('ditto', [join(bundle, 'AnyNotes.app'), join(staging, 'AnyNotes.app')], { stdio: 'inherit' });
+    await symlink('/Applications', join(staging, 'Applications'));
+    execFileSync('hdiutil', [
+      'create', '-ov', '-volname', 'AnyNotes', '-srcfolder', staging, '-format', 'UDZO', '-fs', 'HFS+', image,
+    ], { stdio: 'inherit' });
+    console.log(image);
+  } finally {
+    await rm(staging, { recursive: true, force: true });
+  }
 } else if (target === 'win') {
   const arch = requestedArch ?? 'x64';
   const triple = { x64: 'x86_64-pc-windows-msvc', arm64: 'aarch64-pc-windows-msvc' }[arch];

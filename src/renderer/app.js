@@ -297,9 +297,16 @@ function renderPin(pinned, keysReady) {
   keysAccess.hidden = !isMac || !pinned || keysReady;
 }
 
+function counterHotkeysActive() {
+  return activePanel === 'counter' || pin.getAttribute('aria-pressed') === 'true';
+}
+
 tabs.forEach((tab, index) => {
   tab.addEventListener('click', () => selectPanel(tab.id.slice(4)));
   tab.addEventListener('keydown', (event) => {
+    if (event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) return;
+    if (counterHotkeysActive() && !tab.matches(':focus-visible')
+      && (event.key === 'ArrowLeft' || event.key === 'ArrowRight')) return;
     const last = tabs.length - 1;
     const target = {
       ArrowLeft: index === 0 ? last : index - 1,
@@ -381,12 +388,12 @@ get('increment').addEventListener('click', () => change({ type: 'counter:step', 
 get('reset').addEventListener('click', () => change({ type: 'counter:reset' }));
 
 document.addEventListener('keydown', (event) => {
-  if ((activePanel !== 'counter' && pin.getAttribute('aria-pressed') !== 'true')
+  if (!counterHotkeysActive()
     || event.defaultPrevented || event.isComposing
     || event.ctrlKey || event.metaKey || event.altKey || event.shiftKey
     || event.target?.closest?.('input, textarea, select, [contenteditable], dialog, .history-list, .drag-handle')) return;
-  if (event.key === 'ArrowUp') get('increment').click();
-  if (event.key === 'ArrowDown') get('decrement').click();
+  if (event.key === 'ArrowUp' || event.key === 'ArrowRight') get('increment').click();
+  if (event.key === 'ArrowDown' || event.key === 'ArrowLeft') get('decrement').click();
 });
 
 templateList.addEventListener('click', async (event) => {

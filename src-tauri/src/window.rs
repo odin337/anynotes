@@ -125,9 +125,9 @@ pub fn restore(window: &WebviewWindow, settings: &Settings) -> tauri::Result<()>
         if !compact_default {
             let inner = window.inner_size()?;
             frame.width = frame.width.saturating_sub(inner.width)
-                + (f64::from(bounds.width.max(266)) * scale).round() as u32;
+                + (f64::from(bounds.width.max(224)) * scale).round() as u32;
             frame.height = frame.height.saturating_sub(inner.height)
-                + (f64::from(bounds.height.max(225)) * scale).round() as u32;
+                + (f64::from(bounds.height.max(190)) * scale).round() as u32;
         }
         frame
     } else {
