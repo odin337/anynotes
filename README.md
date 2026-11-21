@@ -10,6 +10,8 @@
 
 **[Скачать AnyNotes для Mac и Windows](https://github.com/odin337/anynotes/releases/latest)**
 
+Отчёты VirusTotal для версии 1.0.2 ([DMG для Mac](https://www.virustotal.com/gui/file/c5512aeefa15fdc3ee69fd4181011419de7f6cc5af30808a377b127e7c59052b) · [EXE для Windows](https://www.virustotal.com/gui/file/ae7a34a4dd83dd7c8f88a028876b05686819124189a08eab1c56ad2a8a9c1111))
+
 - **Заметки.** Держите перед глазами номер заявки, список дел или подсказку. Текст сохраняется автоматически.
 - **Счётчик.** Считайте заявки, звонки или любые повторяющиеся действия. После сброса число попадает в историю. В ней хранятся последние десять значений.
 - **Шаблоны.** Дайте текстам понятные названия. Копируйте их в один клик и меняйте порядок перетаскиванием.
@@ -46,6 +48,8 @@
 Work in customer support? Jot down a ticket number, count the cases you've closed, and copy a reply you use all the time. Pin AnyNotes above your browser or help desk to keep it within reach while you work.
 
 **[Download AnyNotes for Mac and Windows](https://github.com/odin337/anynotes/releases/latest)**
+
+VirusTotal reports for version 1.0.2 ([Mac DMG](https://www.virustotal.com/gui/file/c5512aeefa15fdc3ee69fd4181011419de7f6cc5af30808a377b127e7c59052b) · [Windows EXE](https://www.virustotal.com/gui/file/ae7a34a4dd83dd7c8f88a028876b05686819124189a08eab1c56ad2a8a9c1111))
 
 - **Notes.** Write down the things you need to remember. Your notes save as you type.
 - **Counter.** Count tickets, calls, or anything you do repeatedly. Reset it to start from zero and keep the last ten totals in history.
