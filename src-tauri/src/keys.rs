@@ -114,8 +114,8 @@ mod platform {
     }
 
     pub fn request_access() -> Result<(), String> {
-        if unsafe { CGPreflightListenEventAccess() || CGRequestListenEventAccess() } {
-            return Ok(());
+        if !unsafe { CGPreflightListenEventAccess() } {
+            unsafe { CGRequestListenEventAccess() };
         }
         let status = std::process::Command::new("/usr/bin/open")
             .arg("x-apple.systempreferences:com.apple.preference.security?Privacy_ListenEvent")
