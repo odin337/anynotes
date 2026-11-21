@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AnyNotes</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" type="module"></script>
+</head>
+<body>
+  <main class="app" id="app" hidden>
+    <div class="toolbar">
+      <nav class="tabs" aria-label="Разделы" role="tablist">
+        <button class="tab" id="tab-notes" type="button" role="tab" aria-selected="true" aria-controls="notes">Заметки</button>
+        <button class="tab" id="tab-counter" type="button" role="tab" aria-selected="false" aria-controls="counter" tabindex="-1">Счётчик</button>
+        <button class="tab" id="tab-templates" type="button" role="tab" aria-selected="false" aria-controls="templates" tabindex="-1">Шаблоны</button>
+      </nav>
+      <div class="toolbar-actions">
+        <button class="button primary add-button" id="add" type="button" aria-label="Новая заметка">
+          <i class="ph plus" aria-hidden="true"></i>
+        </button>
+        <button class="pin-button" id="pin" type="button" aria-label="Поверх других окон" aria-pressed="false" title="Закрепить поверх других окон" disabled>
+          <i class="ph pin" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+
+    <section class="panel notes-layout" id="notes" role="tabpanel" aria-labelledby="tab-notes">
+      <aside class="note-sidebar">
+        <h1 class="section-label">Мои заметки</h1>
+        <div class="note-list" id="note-list" aria-label="Мои заметки"></div>
+        <div class="note-picker">
+          <select id="note-select" aria-label="Выбрать заметку"></select>
+          <i class="ph caret" aria-hidden="true"></i>
+        </div>
+      </aside>
+      <article class="paper" id="paper" data-color="honey">
+        <input class="paper-title" id="note-title" type="text" aria-label="Название заметки" placeholder="Без названия" maxlength="120" autocomplete="off">
+        <textarea class="paper-content" id="note-text" aria-label="Текст заметки" placeholder="Напишите здесь…" maxlength="100000"></textarea>
+        <footer class="paper-tools">
+          <span class="save-status" id="note-status" role="status"><i class="ph check" aria-hidden="true"></i><span>Сохранено</span></span>
+          <div class="paper-actions">
+            <div class="palette" id="palette" role="group" aria-label="Цвет заметки">
+              <button type="button" data-color="honey" title="Жёлтый" aria-label="Жёлтый" aria-pressed="true"></button>
+              <button type="button" data-color="lilac" title="Сиреневый" aria-label="Сиреневый" aria-pressed="false"></button>
+              <button type="button" data-color="mint" title="Мятный" aria-label="Мятный" aria-pressed="false"></button>
+              <button type="button" data-color="rose" title="Розовый" aria-label="Розовый" aria-pressed="false"></button>
+            </div>
+            <button class="icon-button delete-button" id="note-delete" type="button" title="Удалить заметку" aria-label="Удалить заметку"><i class="ph trash" aria-hidden="true"></i></button>
+          </div>
+        </footer>
+      </article>
+      <div class="empty empty-notes" id="notes-empty" hidden>
+        <h2>Пока нет заметок</h2>
+      </div>
+    </section>
+
+    <section class="panel counter-layout" id="counter" role="tabpanel" aria-labelledby="tab-counter" hidden>
+      <div class="counter-card">
+        <output class="counter-value" id="counter-value" aria-label="Текущее значение" aria-live="polite">0</output>
+        <div class="counter-controls">
+          <button class="step-button" id="decrement" type="button" aria-label="Уменьшить на 1" aria-keyshortcuts="ArrowDown" title="Уменьшить на 1 (↓)"><i class="ph minus" aria-hidden="true"></i></button>
+          <button class="step-button step-up" id="increment" type="button" aria-label="Увеличить на 1" aria-keyshortcuts="ArrowUp" title="Увеличить на 1 (↑)"><i class="ph plus" aria-hidden="true"></i></button>
+        </div>
+        <button class="button reset-button" id="reset" type="button"><i class="ph reset" aria-hidden="true"></i>Сбросить</button>
+      </div>
+      <div class="history-card">
+        <h2>История сбросов</h2>
+        <ol class="history-list" id="history-list" tabindex="0" aria-label="История сбросов"></ol>
+        <p class="history-empty" id="history-empty">Пока нет сбросов</p>
+      </div>
+    </section>
+
+    <section class="panel templates-panel" id="templates" role="tabpanel" aria-labelledby="tab-templates" hidden>
+      <div class="template-list" id="template-list"></div>
+      <div class="empty" id="templates-empty">
+        <h1>Пока нет шаблонов</h1>
+      </div>
+    </section>
+    <button class="keys-access" id="keys-access" type="button" hidden>Разрешить ↑ ↓ в других приложениях</button>
+  </main>
+
+  <dialog id="template-editor" aria-labelledby="template-heading">
+    <form id="template-form">
+      <div class="modal-head">
+        <h2 id="template-heading">Новый шаблон</h2>
+        <button class="icon-button" type="button" data-close title="Закрыть" aria-label="Закрыть"><i class="ph close" aria-hidden="true"></i></button>
+      </div>
+      <label for="template-title">Название</label>
+      <input id="template-title" maxlength="120" required placeholder="Например, приветствие" autocomplete="off" autofocus>
+      <label for="template-text">Текст для копирования</label>
+      <textarea id="template-text" maxlength="100000" required placeholder="Введите текст шаблона"></textarea>
+      <div class="modal-actions">
+        <button class="button secondary" type="button" data-close>Отмена</button>
+        <button class="button primary" type="submit">Сохранить</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="delete-dialog" aria-labelledby="delete-heading">
+    <form id="delete-form">
+      <div class="modal-head">
+        <h2 id="delete-heading">Удалить заметку?</h2>
+      </div>
+      <p id="delete-label"></p>
+      <div class="modal-actions">
+        <button class="button secondary" type="button" data-close autofocus>Отмена</button>
+        <button class="button danger" type="submit">Удалить</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" hidden><i class="ph check" aria-hidden="true"></i><span></span></div>
+</body>
+</html>

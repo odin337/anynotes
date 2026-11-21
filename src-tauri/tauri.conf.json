@@ -1,0 +1,40 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "AnyNotes",
+  "version": "1.0.0",
+  "identifier": "studio.anynotes.desktop",
+  "build": { "frontendDist": "../src/renderer" },
+  "app": {
+    "withGlobalTauri": true,
+    "windows": [
+      {
+        "label": "main",
+        "title": "AnyNotes",
+        "width": 420,
+        "height": 326,
+        "minWidth": 266,
+        "minHeight": 225,
+        "center": true,
+        "visible": false,
+        "theme": "Light"
+      }
+    ],
+    "security": {
+      "csp": "default-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self'; connect-src 'self' ipc: http://ipc.localhost; base-uri 'none'; form-action 'none'",
+      "capabilities": [{
+        "identifier": "counter-updates",
+        "windows": ["main"],
+        "permissions": ["core:event:allow-listen", "core:event:allow-unlisten"]
+      }]
+    }
+  },
+  "bundle": {
+    "active": true,
+    "icon": ["../assets/icon.png", "../assets/AnyNotes.icns", "../assets/AnyNotes.ico"],
+    "macOS": { "minimumSystemVersion": "13.3", "signingIdentity": "-" },
+    "windows": {
+      "webviewInstallMode": { "type": "downloadBootstrapper", "silent": true },
+      "nsis": { "installerIcon": "../assets/AnyNotes.ico", "languages": ["Russian", "English"] }
+    }
+  }
+}
