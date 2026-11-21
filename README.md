@@ -27,7 +27,9 @@
 
 **Как закрепить заметки поверх всех окон?** Нажмите булавку. Потяните за край или угол, чтобы уменьшить окно до размера стикера. Все три вкладки доступны в маленьком окне и на Mac, и на Windows. На Mac закреплённое окно видно и поверх полноэкранных приложений.
 
-**Как считать обращения, пока я работаю в браузере?** Закрепите AnyNotes. ↑ и → увеличивают число, ↓ и ← уменьшают. Браузер продолжает получать нажатия. Если на Mac появится кнопка «Открыть настройки стрелок», нажмите её и включите AnyNotes в «Мониторинге ввода». Если переключатель уже включён, а кнопка всё ещё видна, завершите AnyNotes через ⌘Q и снова откройте его из папки «Программы».
+**Как считать обращения, пока я работаю в браузере?** Закрепите AnyNotes. ↑ и → увеличивают число, ↓ и ← уменьшают. Браузер продолжает получать нажатия. На Mac нажмите «Открыть настройки стрелок» и включите AnyNotes в «Мониторинге ввода».
+
+**Почему кнопка настроек стрелок осталась после обновления на Mac?** Разрешение может относиться к предыдущей сборке, даже если переключатель включён. Завершите AnyNotes через ⌘Q. В «Мониторинге ввода» выберите AnyNotes и нажмите «−». Затем нажмите «+», добавьте AnyNotes из папки «Программы» и включите переключатель. Откройте AnyNotes из этой же папки.
 
 **Как скопировать шаблон, не переключаясь на AnyNotes?** Нажмите кнопку «Копировать» в строке шаблона. На Mac копирование срабатывает с первого клика, даже если активно другое приложение.
 
@@ -62,7 +64,9 @@ macOS may ask you to confirm the first launch. [How to open a downloaded Mac app
 
 **How do I keep sticky notes above other windows?** Click the pin. Drag an edge or corner to shrink the window to sticky note size. All three tabs fit at the smallest size on Mac and Windows. On Mac, the pinned window also stays above full-screen apps.
 
-**Can I tally support tickets while I work in my browser?** Pin AnyNotes. Press ↑ or → to add one and ↓ or ← to subtract one. The browser still gets the keypresses. On Mac, if the arrow settings button appears, click it and switch on AnyNotes in Input Monitoring. If the switch is on and the button is still there, press ⌘Q to quit AnyNotes and open it again from Applications.
+**Can I tally support tickets while I work in my browser?** Pin AnyNotes. Press ↑ or → to add one and ↓ or ← to subtract one. The browser still gets the keypresses. On Mac, click the arrow settings button and switch on AnyNotes in Input Monitoring.
+
+**Why does the arrow settings button still show after a Mac update?** The switch may still be on for the previous build. Press ⌘Q to quit AnyNotes. In Input Monitoring, select AnyNotes and click «−». Click «+», add the copy from Applications, then switch it on. Open AnyNotes from that same folder.
 
 **How do I copy a template while working in another app?** Click Copy next to the template. On Mac, one click copies the text even if another app has focus.
 
