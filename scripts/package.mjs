@@ -27,7 +27,7 @@ if (target === 'mac' && process.platform === 'darwin') {
     '--from', 'dmgbuild==2.0.0', 'dmgbuild',
     '--settings', join(root, 'scripts', 'dmg-settings.py'),
     '-D', `app=${join(bundle, 'AnyNotes.app')}`,
-    '-D', `art=${join(root, 'assets', 'dmg-background.tiff')}`,
+    '-D', `art=${join(root, 'assets', 'dmg-background.png')}`,
     'AnyNotes', image,
   ], { stdio: 'inherit' });
   console.log(image);
