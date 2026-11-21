@@ -7,6 +7,7 @@ const api = {
   pin: (pinned) => invoke('pin', { pinned }),
   copy: (id) => invoke('copy', { id }),
   authorizeKeys: () => invoke('authorize_keys'),
+  keysReady: () => invoke('keys_ready'),
 };
 const get = (id) => document.getElementById(id);
 const tabs = [...document.querySelectorAll('.tab')];
@@ -341,22 +342,23 @@ keysAccess.addEventListener('click', async () => {
   try {
     const ready = await api.authorizeKeys();
     renderPin(pin.getAttribute('aria-pressed') === 'true', ready);
-    if (!ready) notify('Разрешите AnyNotes мониторинг ввода в настройках macOS, затем перезапустите приложение.');
-  } catch {
-    notify('Не удалось проверить разрешение', true);
+    if (!ready) notify('Включите AnyNotes в «Мониторинге ввода». Если уже включено, перезапустите приложение.');
+  } catch (error) {
+    notify(typeof error === 'string' ? error : 'Не удалось открыть настройки macOS', true);
   } finally {
     keysAccess.disabled = false;
   }
 });
-window.addEventListener('focus', async () => {
-  if (keysAccess.hidden) return;
+async function refreshKeysAccess() {
+  if (keysAccess.hidden || keysAccess.disabled || pin.disabled) return;
   try {
-    const status = await api.session();
-    renderPin(status.pinned, status.keysReady);
+    const ready = await api.keysReady();
+    renderPin(pin.getAttribute('aria-pressed') === 'true', ready);
   } catch {
     // Keep the authorization button available for a retry.
   }
-});
+}
+window.addEventListener('focus', refreshKeysAccess);
 
 add.addEventListener('click', () => {
   if (activePanel === 'notes') addNote();
@@ -462,6 +464,7 @@ async function start() {
     await window.__TAURI__.event.listen('counter-changed', ({ payload }) => receive(payload));
     const session = await api.session();
     isMac = session.platform === 'macos';
+    if (isMac) setInterval(refreshKeysAccess, 2000);
     renderPin(session.pinned, session.keysReady);
     receive(session.data);
     selectPanel('notes');

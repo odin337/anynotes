@@ -113,10 +113,17 @@ mod platform {
         });
     }
 
-    pub fn request_access() {
-        if !unsafe { CGPreflightListenEventAccess() } {
-            unsafe { CGRequestListenEventAccess() };
+    pub fn request_access() -> Result<(), String> {
+        if unsafe { CGPreflightListenEventAccess() || CGRequestListenEventAccess() } {
+            return Ok(());
         }
+        let status = std::process::Command::new("/usr/bin/open")
+            .arg("x-apple.systempreferences:com.apple.preference.security?Privacy_ListenEvent")
+            .status();
+        if status.is_ok_and(|status| status.success()) {
+            return Ok(());
+        }
+        Err("Откройте «Конфиденциальность и безопасность» → «Мониторинг ввода»".into())
     }
 
     #[cfg(test)]
@@ -214,7 +221,9 @@ mod platform {
         });
     }
 
-    pub fn request_access() {}
+    pub fn request_access() -> Result<(), String> {
+        Ok(())
+    }
 }
 
 #[cfg(not(any(target_os = "macos", target_os = "windows")))]
@@ -224,5 +233,7 @@ mod platform {
         false
     }
     pub fn disable() {}
-    pub fn request_access() {}
+    pub fn request_access() -> Result<(), String> {
+        Ok(())
+    }
 }

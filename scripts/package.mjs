@@ -1,6 +1,5 @@
 import { execFileSync } from 'node:child_process';
-import { copyFile, mkdir, mkdtemp, readFile, readdir, rm, symlink } from 'node:fs/promises';
-import { tmpdir } from 'node:os';
+import { copyFile, mkdir, readFile, readdir } from 'node:fs/promises';
 import { delimiter, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -23,18 +22,15 @@ if (target === 'mac' && process.platform === 'darwin') {
   const triple = { arm64: 'aarch64-apple-darwin', x64: 'x86_64-apple-darwin' }[arch];
   if (!triple) throw new Error('Expected macOS arm64 or x64.');
   const bundle = build(triple, 'app');
-  const staging = await mkdtemp(join(tmpdir(), 'anynotes-dmg-'));
   const image = join(out, `AnyNotes-${version}-macOS-${arch}.dmg`);
-  try {
-    execFileSync('ditto', [join(bundle, 'AnyNotes.app'), join(staging, 'AnyNotes.app')], { stdio: 'inherit' });
-    await symlink('/Applications', join(staging, 'Applications'));
-    execFileSync('hdiutil', [
-      'create', '-ov', '-volname', 'AnyNotes', '-srcfolder', staging, '-format', 'UDZO', '-fs', 'HFS+', image,
-    ], { stdio: 'inherit' });
-    console.log(image);
-  } finally {
-    await rm(staging, { recursive: true, force: true });
-  }
+  execFileSync('uvx', [
+    '--from', 'dmgbuild==2.0.0', 'dmgbuild',
+    '--settings', join(root, 'scripts', 'dmg-settings.py'),
+    '-D', `app=${join(bundle, 'AnyNotes.app')}`,
+    '-D', `art=${join(root, 'assets', 'dmg-background.tiff')}`,
+    'AnyNotes', image,
+  ], { stdio: 'inherit' });
+  console.log(image);
 } else if (target === 'win') {
   const arch = requestedArch ?? 'x64';
   const triple = { x64: 'x86_64-pc-windows-msvc', arm64: 'aarch64-pc-windows-msvc' }[arch];

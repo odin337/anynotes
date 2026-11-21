@@ -18,15 +18,16 @@
 
 ### Установка
 
-На Mac с Apple Silicon (macOS 13.3 и новее) откройте DMG и перетащите AnyNotes в «Программы». На Windows x64 запустите `.exe`. При обновлении можно установить новую версию поверх старой или сначала удалить файлы старой версии. Заметки и шаблоны сохраняются в обоих случаях. Если Windows понадобится WebView2, установщик скачает его.
+- **Mac с Apple Silicon (macOS 13.3 и новее).** Откройте DMG и перетащите значок AnyNotes в папку «Программы» по стрелке. Затем запустите AnyNotes из этой папки.
+- **Windows x64.** Запустите `.exe`. Можно установить обновление поверх старой версии или сначала удалить её файлы. Заметки и шаблоны сохраняются в обоих случаях. Если Windows понадобится WebView2, установщик скачает его.
 
 При первом запуске Mac может попросить подтвердить открытие. [Как открыть скачанное приложение на Mac](https://support.apple.com/en-us/102445)
 
 ### Частые вопросы
 
-**Как закрепить заметки поверх всех окон?** Нажмите булавку. Окно можно уменьшить до размера стикера, а на Mac оно остаётся на виду и в полноэкранном режиме.
+**Как закрепить заметки поверх всех окон?** Нажмите булавку. Потяните за край или угол, чтобы уменьшить окно до размера стикера. Все три вкладки доступны в маленьком окне и на Mac, и на Windows. На Mac закреплённое окно видно и поверх полноэкранных приложений.
 
-**Как считать обращения, пока я работаю в браузере?** Закрепите AnyNotes. ↑ и → увеличивают число, ↓ и ← уменьшают. Браузер продолжает получать все нажатия. На Mac нажмите кнопку разрешения мониторинга ввода, если она появится.
+**Как считать обращения, пока я работаю в браузере?** Закрепите AnyNotes. ↑ и → увеличивают число, ↓ и ← уменьшают. Браузер продолжает получать нажатия. Если на Mac появится кнопка «Открыть настройки стрелок», нажмите её и включите AnyNotes в «Мониторинге ввода». Если переключатель уже включён, а кнопка всё ещё видна, завершите AnyNotes через ⌘Q и снова откройте его из папки «Программы».
 
 **Как скопировать шаблон, не переключаясь на AnyNotes?** Нажмите кнопку «Копировать» в строке шаблона. На Mac копирование срабатывает с первого клика, даже если активно другое приложение.
 
@@ -50,15 +51,18 @@ Work in customer support? Jot down a ticket number, count the cases you've close
 
 ### Installation
 
-On an Apple Silicon Mac (macOS 13.3 or later), open the DMG and drag AnyNotes to Applications. On Windows x64, run the `.exe` installer. You can upgrade in place or remove the old program files first. Your notes and templates stay in either case. The installer downloads WebView2 if needed. The app interface is currently in Russian.
+- **Apple Silicon Mac (macOS 13.3 or later).** Open the DMG, follow the arrow to drag AnyNotes to Applications, then launch it from that folder.
+- **Windows x64.** Run the `.exe` installer. You can upgrade in place or remove the old program files first. Your notes and templates stay in either case. The installer downloads WebView2 if needed.
+
+The app interface is in Russian.
 
 macOS may ask you to confirm the first launch. [How to open a downloaded Mac app](https://support.apple.com/en-us/102445)
 
 ### Common questions
 
-**How do I keep sticky notes above other windows?** Click the pin and resize the window to fit the space you have. On Mac, the pinned window also stays above full-screen apps.
+**How do I keep sticky notes above other windows?** Click the pin. Drag an edge or corner to shrink the window to sticky note size. All three tabs fit at the smallest size on Mac and Windows. On Mac, the pinned window also stays above full-screen apps.
 
-**Can I tally support tickets while I work in my browser?** Pin AnyNotes. Press ↑ or → to add one and ↓ or ← to subtract one. The browser still gets the keypresses. On Mac, click the Input Monitoring permission button if it appears.
+**Can I tally support tickets while I work in my browser?** Pin AnyNotes. Press ↑ or → to add one and ↓ or ← to subtract one. The browser still gets the keypresses. On Mac, if the arrow settings button appears, click it and switch on AnyNotes in Input Monitoring. If the switch is on and the button is still there, press ⌘Q to quit AnyNotes and open it again from Applications.
 
 **How do I copy a template while working in another app?** Click Copy next to the template. On Mac, one click copies the text even if another app has focus.
 
@@ -79,6 +83,6 @@ npm ci
 npm start
 ```
 
-`npm run package:mac` создаёт DMG на Mac, `npm run package:win` собирает установщик Windows x64. Результаты находятся в `dist`.
+Для сборки DMG на Mac установите [uv](https://docs.astral.sh/uv/getting-started/installation/) и запустите `npm run package:mac`. Команда `npm run package:win` собирает установщик Windows x64. Готовые файлы лежат в `dist`.
 
-Run `npm run package:mac` on a Mac for the DMG, or `npm run package:win` for the Windows x64 installer. Find both in `dist`.
+On Mac, install [uv](https://docs.astral.sh/uv/getting-started/installation/) and run `npm run package:mac` for the DMG. Run `npm run package:win` for the Windows x64 installer. Find both in `dist`.

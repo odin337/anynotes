@@ -49,12 +49,17 @@ fn pin(
 }
 
 #[tauri::command]
-fn authorize_keys(store: State<SharedStore>, keys: State<Keys>) -> bool {
+fn authorize_keys(store: State<SharedStore>, keys: State<Keys>) -> Result<bool, String> {
     if !store.lock().unwrap().settings().pinned {
-        return false;
+        return Ok(false);
     }
-    keys::request_access();
-    keys.enable()
+    keys::request_access()?;
+    Ok(keys.enable())
+}
+
+#[tauri::command]
+fn keys_ready(store: State<SharedStore>, keys: State<Keys>) -> bool {
+    store.lock().unwrap().settings().pinned && keys.enable()
 }
 
 #[tauri::command]
@@ -99,6 +104,10 @@ fn main() {
             let window = app
                 .get_webview_window("main")
                 .ok_or("Окно AnyNotes недоступно")?;
+            #[cfg(target_os = "windows")]
+            // Windows applies this to the client area. macOS's 190pt frame
+            // in the compact layout already includes its 32pt title bar.
+            window.set_min_size(Some(tauri::LogicalSize::new(224, 158)))?;
             window::restore(&window, &settings)?;
             if settings.pinned {
                 window::pin(&window, true)?;
@@ -129,6 +138,7 @@ fn main() {
             apply,
             pin,
             authorize_keys,
+            keys_ready,
             copy
         ])
         .run(tauri::generate_context!())
